@@ -40,7 +40,7 @@ module.exports = function(config) {
     // preprocess matching files before serving them to the browser
     // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
     preprocessors: {
-        '../ContaAzul/contaazul-static/src/main/webapp/js/**/*.html': 'ng-html2js',
+        '../ContaAzul/contaazul-static/src/main/webapp/js/**/*Template.html': 'ng-html2js',
         '../ContaAzul/contaazul-static/src/main/webapp/js/*Module.js': 'coverage'
     },
 
@@ -48,8 +48,8 @@ module.exports = function(config) {
     ngHtml2JsPreprocessor: {
       // If your build process changes the path to your templates,
       // use stripPrefix and prependPrefix to adjust it.
-      //stripPrefix: '${contaazulCdnUrl}/js/',
-      //prependPrefix: '../ContaAzul/contaazul-static/src/main/webapp/js/',
+      //stripPrefix: '',
+      //prependPrefix: '',
 
       moduleName: 'templates'
     },
@@ -67,7 +67,6 @@ module.exports = function(config) {
             { type : 'html', subdir: 'report-html' },
             { type: 'text', subdir: '.' }
         ]
-
     },
 
 
