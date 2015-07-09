@@ -13,6 +13,7 @@ The available tasks are:
 - *grunt jshint*: inspect javascript syntax
 - *grunt less*: compile contaazul.less file into contaazul.css
 - *karma start*: run unit testing against the components we already have isolated on cdn
+- *grunt watch*: run all above tasks
 
 ## Troubleshooting
 - If you get `npm: command not found`, make sure you have npm-cli **globally** installed in your system.
