@@ -4,7 +4,9 @@ var fs = require('fs');
 var gulp = require('gulp');
 var less = require('gulp-less');
 var inquirer = require('inquirer');
-var paths = require('./paths');
+var path = require('path');
+var minifyCss = require('gulp-minify-css');
+var paths;
 var JBOSS_PATH;
 var CA_PATH;
 
@@ -20,11 +22,12 @@ var questions = [{
 
 function questionsAnswered(data) {
   return function(answers) {
-      data.JBOSS_PATH = answers.jbossPath;
-      data.CA_PATH = answers.caPath;
+      data.JBOSS_PATH = path.relative( __dirname, answers.jbossPath );
+      data.CA_PATH = path.relative( __dirname, answers.caPath );
 
       fs.writeFile('./automation.json', JSON.stringify(data), function(err) {
         if(err) throw err;
+        paths = require('./paths');
         gulp.start('watch');
       });
   };
@@ -34,20 +37,24 @@ gulp.task('get-paths', function(done) {
   fs.readFile('./automation.json', function(err, data) {
     if(err) throw err;
     data = JSON.parse(data);
-    if(data.JBOSS_PATH && data.CA_PATH)
+    if(data.JBOSS_PATH && data.CA_PATH) {
+      paths = require('./paths');
       return gulp.start('watch');
+    }
 
     inquirer.prompt(questions, questionsAnswered(data));
   });
 });
 
 gulp.task( 'watch', [ 'less' ], function() {
-  gulp.watch( 'less/**/*.less', [ 'less' ] );
+  console.log(paths);
+  gulp.watch( paths.cssSrc, [ 'less' ] );
 });
 
 gulp.task( 'less', function() {
-  gulp.src('less/**/*.less')
+  gulp.src(paths.contaazulLess)
     .pipe(less())
+    .pipe(minifyCss())
     .pipe(gulp.dest('css'));
 });
 
