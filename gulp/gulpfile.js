@@ -35,8 +35,7 @@ function questionsAnswered(data) {
 
 gulp.task('get-paths', function(done) {
   fs.readFile('./automation.json', function(err, data) {
-    if(err) throw err;
-    data = JSON.parse(data);
+    data = ( data && JSON.parse(data) ) || {};
     if(data.JBOSS_PATH && data.CA_PATH) {
       paths = require('./paths');
       return gulp.start('watch');
