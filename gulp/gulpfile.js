@@ -54,7 +54,7 @@ gulp.task( 'less', function() {
   gulp.src(paths.contaazulLess)
     .pipe(less())
     .pipe(minifyCss())
-    .pipe(gulp.dest('css'));
+    .pipe(gulp.dest(paths.cssDest));
 });
 
 gulp.task( 'default', [ 'get-paths' ]);
