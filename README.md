@@ -2,8 +2,8 @@
 This is a toolkit to better work on ContaAzul front-end.
 
 ## Requirements
-To run this project, you need Nodejs installed in your system. *node ~v0.10 recommended*
-And global Gulp installed ```npm i -g gulp ```
+- Nodejs installed in your system. *node ~v0.10 recommended*
+- Global Gulp plugin installed ```npm i -g gulp ```
 
 ## Installation
 - To get this automator up and running, just run `npm install` after to clone the repo.
