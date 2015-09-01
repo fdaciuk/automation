@@ -45,16 +45,22 @@ gulp.task('get-paths', function(done) {
   });
 });
 
-gulp.task( 'watch', [ 'less' ], function() {
+gulp.task('watch', [ 'less' ], function() {
   console.log(paths);
   gulp.watch( paths.cssSrc, [ 'less' ] );
+  gulp.watch( paths.htmlSrc, [ 'html' ] );
 });
 
-gulp.task( 'less', function() {
+gulp.task('less', function() {
   gulp.src(paths.contaazulLess)
     .pipe(less())
     .pipe(minifyCss())
     .pipe(gulp.dest(paths.cssDest));
+});
+
+gulp.task('html', function() {
+  gulp.src(paths.htmlSrc, { base: paths.htmlSrcBase })
+    .pipe(gulp.dest(paths.htmlDest))
 });
 
 gulp.task( 'default', [ 'get-paths' ]);
