@@ -20,19 +20,6 @@ var questions = [{
   message: 'Qual o caminho do seu ContaAzul?'
 }];
 
-function questionsAnswered(data) {
-  return function(answers) {
-      data.JBOSS_PATH = path.relative( __dirname, answers.jbossPath );
-      data.CA_PATH = path.relative( __dirname, answers.caPath );
-
-      fs.writeFile('./automation.json', JSON.stringify(data), function(err) {
-        if(err) throw err;
-        paths = require('./paths');
-        gulp.start('watch');
-      });
-  };
-}
-
 gulp.task('get-paths', function(done) {
   fs.readFile('./automation.json', function(err, data) {
     data = ( data && JSON.parse(data) ) || {};
@@ -48,6 +35,7 @@ gulp.task('get-paths', function(done) {
 gulp.task('watch', [ 'less' ], function() {
   console.log(paths);
   gulp.watch( paths.cssSrc, [ 'less' ] );
+  gulp.watch( paths.jsSrc, [ 'js' ] );
   gulp.watch( paths.htmlSrc, [ 'html' ] );
 });
 
@@ -58,9 +46,30 @@ gulp.task('less', function() {
     .pipe(gulp.dest(paths.cssDest));
 });
 
-gulp.task('html', function() {
-  gulp.src(paths.htmlSrc, { base: paths.htmlSrcBase })
-    .pipe(gulp.dest(paths.htmlDest))
+gulp.task('js', function() {
+  compileAppBoot(paths.jsSrc);
 });
+
+gulp.task('html', function() {
+  compileAppBoot(paths.htmlSrc);
+});
+
+function questionsAnswered(data) {
+  return function(answers) {
+      data.JBOSS_PATH = path.relative( __dirname, answers.jbossPath );
+      data.CA_PATH = path.relative( __dirname, answers.caPath );
+
+      fs.writeFile('./automation.json', JSON.stringify(data), function(err) {
+        if(err) throw err;
+        paths = require('./paths');
+        gulp.start('watch');
+      });
+  };
+}
+
+function compileAppBoot( src ) {
+  gulp.src(src, { base: paths.appBootSrcBase })
+    .pipe(gulp.dest(paths.appBootDest));
+}
 
 gulp.task( 'default', [ 'get-paths' ]);
