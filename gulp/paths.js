@@ -1,7 +1,7 @@
-var path = require('path');
-var automation = require('./automation.json');
+import path from 'path';
+import automation from './automation.json';
 
-var paths = {
+let paths = {
   appStatic: path.normalize(automation.CA_PATH + '/contaazul-static'),
   appBoot: path.normalize(automation.CA_PATH + '/contaazul-app-boot')
 };
@@ -14,4 +14,4 @@ paths.htmlSrc = path.normalize(paths.appBoot + '/src/main/webapp/app/**/*.html')
 paths.appBootSrcBase = path.normalize(paths.appBoot + '/src/main/webapp/app');
 paths.appBootDest = path.normalize(automation.JBOSS_PATH + '/standalone/deployments/contaazul-app.ear/contaazul-app-boot.war/app');
 
-module.exports = paths;
+export default paths;
